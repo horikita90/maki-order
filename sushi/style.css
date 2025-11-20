@@ -1,0 +1,200 @@
+/* ===========================
+   Google FontsのOswaldを使用
+=========================== */
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+
+body {
+  font-family: 'Oswald', sans-serif;
+  background-color: #f7f7f7;
+  margin: 0;
+  padding: 20px;
+  color: #2c3e50;
+}
+
+/* ===========================
+   見出し
+=========================== */
+h1, h2, h3 {
+  text-align: center;
+  color: #2c3e50;
+  letter-spacing: 2px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+  margin-bottom: 20px;
+}
+
+/* ===========================
+   フォーム全体
+=========================== */
+form {
+  background-color: #fff;
+  max-width: 800px;
+  margin: 0 auto 40px auto;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* ===========================
+   入力欄
+=========================== */
+input[type="text"], select, input[type="datetime-local"], input[type="number"] {
+  width: 100%;
+  padding: 8px 10px;
+  margin: 5px 0 15px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-family: 'Oswald', sans-serif;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+/* ===========================
+   ボタン
+=========================== */
+button {
+  background-color: #e74c3c;
+  color: #fff;
+  font-size: 18px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+button:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+}
+
+/* ===========================
+   商品カード
+=========================== */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
+}
+
+.product-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  text-align: center;
+  padding: 15px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.product-card img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.product-card label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* ===========================
+   合計金額
+=========================== */
+#totalPrice {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: right;
+  margin-top: 15px;
+}
+
+/* ===========================
+   発注履歴テーブル
+=========================== */
+.table-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Oswald', sans-serif;
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #2c3e50;
+  color: #fff;
+  font-weight: bold;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* ===========================
+   キャンセルボタン
+=========================== */
+.cancel-btn {
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 8px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancel-btn:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+/* ===========================
+   レスポンシブ対応
+=========================== */
+@media screen and (max-width: 600px) {
+  form {
+    padding: 15px;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+
+  button {
+    width: 100%;
+    font-size: 16px;
+  }
+}
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("images/back.jpg") center/cover no-repeat;
+  z-index: -2;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7); /* 半透明の白 */
+  z-index: -1;
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理者画面 | 巻き寿司発注システム</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    if (localStorage.getItem("loggedIn") !== "admin") {
+      window.location.href = "login.html";
+    }
+  </script>
+</head>
+<body>
+  <h1>管理者専用画面</h1>
+  <p>ここでは全発注履歴の確認・削除ができます。</p>
+
+  <div class="table-wrapper">
+    <table id="adminTable">
+      <thead>
+        <tr>
+          <th>発注者</th>
+          <th>クラス</th>
+          <th>希望受取時間</th>
+          <th>内容</th>
+          <th>合計金額</th>
+          <th>発注日時</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <button id="clearAllBtn">全て削除</button>
+  <button onclick="logout()">ログアウト</button>
+
+  <script>
+    const tableBody = document.querySelector("#adminTable tbody");
+    const orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+    function loadOrders() {
+      tableBody.innerHTML = "";
+      orders.forEach((o, i) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${o.customerName}</td>
+          <td>${o.className}</td>
+          <td>${o.pickupTime}</td>
+          <td>${o.details.replace(/\n/g, "<br>")}</td>
+          <td>${o.total.toLocaleString()}円</td>
+          <td>${o.time}</td>
+          <td><button onclick="deleteOrder(${i})">削除</button></td>
+        `;
+        tableBody.appendChild(tr);
+      });
+    }
+
+    function deleteOrder(i) {
+      if (confirm("この発注を削除しますか？")) {
+        orders.splice(i, 1);
+        localStorage.setItem("orders", JSON.stringify(orders));
+        loadOrders();
+      }
+    }
+
+    document.getElementById("clearAllBtn").addEventListener("click", () => {
+      if (confirm("全ての発注データを削除しますか？")) {
+        localStorage.removeItem("orders");
+        location.reload();
+      }
+    });
+
+    function logout() {
+      localStorage.removeItem("loggedIn");
+      window.location.href = "login.html";
+    }
+
+    loadOrders();
+  </script>
+</body>
+</html>
