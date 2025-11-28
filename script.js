@@ -28,7 +28,7 @@ products.forEach((p, i) => {
   const card = document.createElement("div");
   card.className = "product-card";
   card.innerHTML = `
-    <img src="sushi/images/${p.image}" alt="${p.name}">
+    <img src="images/${p.image}" alt="${p.name}">
     <label>${p.name}</label>
     <p>${p.price}円</p>
     <input type="number" min="0" value="0" data-index="${i}" class="qty-input">
@@ -192,3 +192,4 @@ form.addEventListener("submit", (e) => {
 // ===========================
 updateTotal();
 loadOrders();
+
