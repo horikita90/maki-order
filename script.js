@@ -1,19 +1,4 @@
 // ===========================
-// Firebase 初期化
-// ===========================
-const firebaseConfig = {
-  apiKey: "AIzaSyCsTWsykS3RqTyvaSfIQAZtXbegG1ZbLks",
-  authDomain: "sakae-online.firebaseapp.com",
-  projectId: "sakae-online",
-  storageBucket: "sakae-online.firebasestorage.app",
-  messagingSenderId: "97363314367",
-  appId: "1:97363314367:web:232560f00ad64e9faf680a"
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-// ===========================
 // 商品リスト
 // ===========================
 const products = [
@@ -25,7 +10,7 @@ const products = [
   { name: "だし巻き丹後（ハーフ）", price: 580, image: "dashimaki.jpg" },
   { name: "鰻巻", price: 1380, image: "unagi.jpg" },
   { name: "サーモン巻（ハーフ）", price: 740, image: "salmon.jpg" },
-  { name: "【冷凍】丹後のばらずし かに入り", price: 1058, image: "kani.jpg" },
+  { name: "【冷凍】丹後のばらずし かに入り", price: 1058, image: "kani.jpg" }
 ];
 
 // ===========================
@@ -37,13 +22,13 @@ const form = document.getElementById("orderForm");
 const tableBody = document.querySelector("#orderTable tbody");
 
 // ===========================
-// 商品カード生成
+// 商品カード生成（画像パス修正版）
 // ===========================
 products.forEach((p, i) => {
   const card = document.createElement("div");
   card.className = "product-card";
   card.innerHTML = `
-    <img src="images/${p.image}" alt="${p.name}">
+    <img src="sushi/images/${p.image}" alt="${p.name}">
     <label>${p.name}</label>
     <p>${p.price}円</p>
     <input type="number" min="0" value="0" data-index="${i}" class="qty-input">
@@ -63,7 +48,9 @@ function updateTotal() {
   });
   totalPriceEl.textContent = `合計金額：${total.toLocaleString()}円`;
 }
-document.querySelectorAll(".qty-input").forEach(input => input.addEventListener("input", updateTotal));
+document.querySelectorAll(".qty-input").forEach(input =>
+  input.addEventListener("input", updateTotal)
+);
 
 // ===========================
 // 希望受け取り時間の制限（平日限定、12:00～18:00、30分刻み）
@@ -78,7 +65,7 @@ function setPickupTimeConstraints() {
   const todayStr = `${year}-${month}-${day}`;
 
   pickupInput.min = `${todayStr}T12:00`;
-  
+
   pickupInput.addEventListener("input", () => {
     if (!pickupInput.value) return;
 
@@ -95,15 +82,13 @@ function setPickupTimeConstraints() {
       return;
     }
 
-    // 時間を12〜18に制限
     if (hh < 12) hh = 12;
     if (hh > 18) hh = 18;
 
-    // 30分刻みに丸め
     min = min < 15 ? 0 : min < 45 ? 30 : 0;
     if (hh === 18 && min > 0) min = 0;
 
-    pickupInput.value = `${date}T${String(hh).padStart(2,"0")}:${String(min).padStart(2,"0")}`;
+    pickupInput.value = `${date}T${String(hh).padStart(2, "0")}:${String(min).padStart(2, "0")}`;
   });
 }
 setPickupTimeConstraints();
@@ -114,6 +99,7 @@ setPickupTimeConstraints();
 function loadOrders() {
   const orders = JSON.parse(localStorage.getItem("orders")) || [];
   tableBody.innerHTML = "";
+
   orders.forEach((o, i) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -152,7 +138,7 @@ function formatDateTimeNoYear(dtStr) {
 }
 
 // ===========================
-// フォーム送信処理（オフライン版）
+// フォーム送信処理（localStorage版）
 // ===========================
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -197,7 +183,7 @@ form.addEventListener("submit", (e) => {
 
   form.reset();
   updateTotal();
-  setPickupTimeConstraints(); // 時間再設定
+  setPickupTimeConstraints();
   loadOrders();
 });
 
